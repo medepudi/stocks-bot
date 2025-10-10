@@ -1,0 +1,69 @@
+┌──────────────────────────────────────────────┐
+│            ⏰ 12:45 PM — FETCH DATA           │
+│  • Get latest 10–15 days of DIA prices       │
+│  • Save new days into the database           │
+└──────────────────────────────────────────────┘
+                    │
+                    ▼
+┌──────────────────────────────────────────────┐
+│            ⏰ 12:49 PM — UPDATE STREAKS       │
+│  • Look at last 2 closing prices of DIA       │
+│  • If today's close > yesterday's → UP DAY    │
+│      → increase positive streak (+1)          │
+│      → reset negative streak (0)              │
+│  • If today's close < yesterday's → DOWN DAY  │
+│      → increase negative streak (+1)          │
+│      → reset positive streak (0)              │
+│  • Save streak state in DB (strategy_state)   │
+└──────────────────────────────────────────────┘
+                    │
+                    ▼
+┌──────────────────────────────────────────────┐
+│            ⏰ 12:50 PM — TRADE ACTIONS        │
+│  • Read current streak from DB                │
+│                                               │
+│  ▼ If DIA has gone DOWN:                      │
+│     ├─ On 3rd day (or more): BUY DIA (20%) 
+         On 4th Day if its down : Buy DIA (20%)   │
+│     ├─ Always SELL SDOW (inverse ETF)         │
+│                                               │
+│  ▼ If DIA has gone UP:                        │
+│     ├─ On 1st up day: SELL DIA                │
+│     ├─ On 3rd up day: BUY SDOW (20%)  
+         On 4th day up : Buy SDOW(20%)        │
+│                                               │
+│  • Save trades in DB (trade_order table)      │
+│  • Send buy/sell orders to Alpaca API         │
+└──────────────────────────────────────────────┘
+                    │
+                    ▼
+┌──────────────────────────────────────────────┐
+│        💾 Logs & State Updated                │
+│  • All trades recorded in Postgres            │
+│  • Latest streak counts saved in DB           │
+│  • Positions can be checked via Alpaca        │
+└──────────────────────────────────────────────┘
+
+
+
+
+
+| Time (PST)   | Task           | Description                                             |
+| ------------ | -------------- | ------------------------------------------------------- |
+| **12:45 PM** | Fetch Data     | Downloads DIA daily prices from Polygon                 |
+| **12:49 PM** | Update Streaks | Compares last two days, updates up/down streak counters |
+| **12:50 PM** | Trade          | Places buy/sell orders on Alpaca based on streak logic  |
+
+
+
+| Day | DIA Close | Trend          | Action                  |
+| --- | --------- | -------------- | ----------------------- |
+| Mon | 400       | —              | —                       |
+| Tue | 398       | ↓ 1st down day | nothing                 |
+| Wed | 396       | ↓ 2nd down day | nothing                 |
+| Thu | 392       | ↓ 3rd down day | **BUY DIA (20%)**       |
+| Fri | 389       | ↓ 4th down day | **BUY DIA (20%) again** |
+| Mon | 395       | ↑ 1st up day   | **SELL all DIA**        |
+| Tue | 397       | ↑ 2nd up day   | nothing                 |
+| Wed | 401       | ↑ 3rd up day   | **BUY SDOW (20%)**      |
+| Thu | 399       | ↓ 1st down day | **SELL SDOW**           |

@@ -1,0 +1,42 @@
+
+# src/main/resources/application.yml
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/stocks
+    username: stocks_app
+    password: stocks_pwd
+  jpa:
+    hibernate:
+      ddl-auto: none
+    open-in-view: false
+    properties:
+      hibernate.jdbc.time_zone: UTC
+  flyway:
+    enabled: false
+    locations: classpath:db/migration
+
+app:
+  polygon:
+    baseUrl: https://api.polygon.io
+    apiKey: 8JuewLeGBbFLtlYPT7sXrD7NfNkHs8kF
+
+  alpaca:
+    baseUrl: https://paper-api.alpaca.markets
+    keyId: PK82B3HMUN0OM6D743Q0
+    secretKey: da2xFhQRdFqKcLqB4v0nBPIuTGHxMVAoSjDhMP77
+    accountId: ${ALPACA_ACCOUNT_ID}
+
+logging:
+  level:
+    com.stock.demo: INFO
+    org.springframework: INFO
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+
+
+
+

@@ -1,0 +1,40 @@
+# Maven build output
+/target/
+
+# IDEs and editors
+/.idea/
+/*.iml
+/.classpath
+/.project
+/.settings/
+/.vscode/
+/*.swp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# Spring Boot
+# (application.yml usually kept, but secrets.yml or override files ignored)
+application-*.yml
+application-*.properties
+
+# Fly.io / Docker
+/.fly/
+/.fly
+*.env
+*.dockerfile
+
+# Node / frontend (if you add React/Vue later)
+node_modules/
+dist/
+build/
