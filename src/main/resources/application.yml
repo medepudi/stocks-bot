@@ -35,6 +35,22 @@ management:
     web:
       exposure:
         include: health,info
+slackapp:
+  notification:
+    slack:
+      webhook-url: https://hooks.slack.com/services/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   # paste your Slack Incoming Webhook URL, or set as env
+    email:
+      to: ravi.infa@gmail.com
+      from: ravi.infa@gmail.com
+springemail:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ravi.infa@gmail.com
+    password: Asthra2008$
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
 
 
 

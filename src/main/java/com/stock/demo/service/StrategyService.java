@@ -1,6 +1,7 @@
 // src/main/java/com/stock/demo/service/StrategyService.java
 package com.stock.demo.service;
 
+import com.stock.demo.component.TradeNotifier;
 import com.stock.demo.gateway.AlpacaGateway;
 import com.stock.demo.gateway.PolygonGateway;
 import com.stock.demo.model.MarketBarDaily;
@@ -26,15 +27,17 @@ public class StrategyService {
   private final MarketBarDailyRepo bars;
   private final StrategyStateRepo stateRepo;
   private final TradeOrderRepo orderRepo;
+  private final TradeNotifier notifier;
 
   public StrategyService(PolygonGateway polygon, AlpacaGateway alpaca,
                          MarketBarDailyRepo bars, StrategyStateRepo stateRepo,
-                         TradeOrderRepo orderRepo) {
+                         TradeOrderRepo orderRepo,   TradeNotifier notifier) {
     this.polygon = polygon;
     this.alpaca = alpaca;
     this.bars = bars;
     this.stateRepo = stateRepo;
     this.orderRepo = orderRepo;
+    this.notifier= notifier;
   }
 
   // 12:45 PM PT — pull yesterday/today bars so streaks have the latest close
@@ -154,5 +157,6 @@ public class StrategyService {
     row.setStatus(resp != null ? resp.status() : "REQUESTED");
     row.setBrokerOrderId(resp != null ? resp.id() : null);
     orderRepo.save(row);
+    notifier.tradePlaced(action, ticker, qty, row.getStatus(), row.getBrokerOrderId());
   }
 }
