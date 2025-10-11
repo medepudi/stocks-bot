@@ -40,8 +40,8 @@ slackapp:
     slack:
       webhook-url: url  # paste your Slack Incoming Webhook URL, or set as env
     email:
-      to: ravi.infa@gmail.com
-      from: ravi.infa@gmail.com
+      to: gmail.com
+      from: gmail.com
 springemail:
   mail:
     host: smtp.gmail.com
