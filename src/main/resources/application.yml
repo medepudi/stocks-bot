@@ -38,7 +38,7 @@ management:
 slackapp:
   notification:
     slack:
-      webhook-url: https://hooks.slack.com/services  # paste your Slack Incoming Webhook URL, or set as env
+      webhook-url: url  # paste your Slack Incoming Webhook URL, or set as env
     email:
       to: ravi.infa@gmail.com
       from: ravi.infa@gmail.com
