@@ -23,12 +23,12 @@
 │  • Read current streak from DB                │
 │                                               │
 │  ▼ If DIA has gone DOWN:                      │
-│     ├─ On 3rd day (or more): BUY DIA (20%) 
-         On 4th Day if its down : Buy DIA (20%)   │
+│     ├─ On 3rd day (or more): BUY UDOW (20%) 
+         On 4th Day if its down : Buy UDOW (20%)   │
 │     ├─ Always SELL SDOW (inverse ETF)         │
 │                                               │
 │  ▼ If DIA has gone UP:                        │
-│     ├─ On 1st up day: SELL DIA                │
+│     ├─ On 1st up day: SELL UDOW                │
 │     ├─ On 3rd up day: BUY SDOW (20%)  
          On 4th day up : Buy SDOW(20%)        │
 │                                               │
@@ -61,9 +61,18 @@
 | Mon | 400       | —              | —                       |
 | Tue | 398       | ↓ 1st down day | nothing                 |
 | Wed | 396       | ↓ 2nd down day | nothing                 |
-| Thu | 392       | ↓ 3rd down day | **BUY DIA (20%)**       |
-| Fri | 389       | ↓ 4th down day | **BUY DIA (20%) again** |
-| Mon | 395       | ↑ 1st up day   | **SELL all DIA**        |
+| Thu | 392       | ↓ 3rd down day | **BUY UDOW (20%)**       |
+| Fri | 389       | ↓ 4th down day | **BUY UDOW (20%) again** |
+| Mon | 395       | ↑ 1st up day   | **SELL all UDOW**        |
 | Tue | 397       | ↑ 2nd up day   | nothing                 |
 | Wed | 401       | ↑ 3rd up day   | **BUY SDOW (20%)**      |
 | Thu | 399       | ↓ 1st down day | **SELL SDOW**           |
+
+
+
+fly commands:
+ fly scale count 0 -a stocks-bot          # stop
+fly secrets set MY_SECRET=value -a stocks-bot
+fly deploy -a stocks-bot                  # redeploy with new code/secrets
+fly scale count 1 -a stocks-bot           # start again
+ 

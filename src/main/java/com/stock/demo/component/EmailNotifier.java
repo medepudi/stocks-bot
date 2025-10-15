@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class EmailNotifier {
-private final JavaMailSender mailSender;   // may be null
+private final JavaMailSender mailSender;   
 private final String to;
 private final String from;
 
@@ -21,7 +21,6 @@ public EmailNotifier(
 }
 
 public void send(String subject, String body) {
- // If mail isn’t configured, silently no-op (but log to console)
  if (mailSender == null || to.isBlank() || from.isBlank()) {
    System.out.println("EmailNotifier disabled (missing mailSender/to/from)");
    return;

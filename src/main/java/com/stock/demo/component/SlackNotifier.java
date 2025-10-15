@@ -16,7 +16,7 @@ public SlackNotifier(@Value("${app.notification.slack.webhook-url:}") String web
 }
 
 public void send(String text) {
- if (webhookUrl == null || webhookUrl.isBlank()) return; // no-op if not configured
+ if (webhookUrl == null || webhookUrl.isBlank()) return; 
  try {
    client.post()
      .uri(webhookUrl)

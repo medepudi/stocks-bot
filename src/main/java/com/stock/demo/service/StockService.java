@@ -1,6 +1,7 @@
 // src/main/java/com/stock/demo/service/StockService.java
 package com.stock.demo.service;
 
+import com.stock.demo.component.TradeNotifier;
 import com.stock.demo.dto.StockAggResponse;
 import com.stock.demo.dto.StockDTO;
 import com.stock.demo.gateway.PolygonGateway;
@@ -16,10 +17,14 @@ import java.util.List;
 public class StockService {
   private final PolygonGateway gateway;
   private final MarketBarDailyRepo barRepo;
+  private final TradeNotifier notifier;
+  
+  private static final String DRIVER = "DIA";
 
-  public StockService(PolygonGateway gateway, MarketBarDailyRepo barRepo) {
+  public StockService(PolygonGateway gateway, MarketBarDailyRepo barRepo,   TradeNotifier notifier) {
     this.gateway = gateway;
     this.barRepo = barRepo;
+    this.notifier = notifier;
   }
 
   public List<StockDTO> getDailyAggregates(String ticker, LocalDate from, LocalDate to) {
